@@ -18,21 +18,27 @@ fetch(ipurl)
       features.push(new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([lon, lat]))
       }))
-    // create the source and layer for feature
-    const vectorSource = new ol.source.Vector({
-      features
-    })
-    const vectorLayer = new ol.layer.Vector({
-      source: vectorSource,
-      opacity: 0.5,
-      style: new ol.style.Style({
+      // create the source and layer for feature
+      const vectorSource = new ol.source.Vector({
+        features
+      })
+      const iconStyle = new ol.style.Style({
         image: new ol.style.Circle({
-          radius: 20,
-          fill: new ol.style.Fill({color: 'red'}),
+          radius: 200,
+          fill: new ol.style.Fill({ color: 'red' }),
         })
       })
-    })
-      
+      const vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        updateWhileAnimating: true,
+        updateWhileInteracting: true,
+        opacity: 0.5,
+        style: function (feature, resolution) {
+          iconStyle.getImage().setScale(map.getView().getResolutionForZoom(12) / resolution)
+          return iconStyle
+        }
+      })
+
       const map = new ol.Map({
         target: 'map',
         layers: [
