@@ -78,4 +78,15 @@ function draw() {
       center: ol.proj.fromLonLat([lon, lat]), zoom: 12
     })
   })
+  function getCenter() {
+    //returns center of map in usable coords, default map coords are '3857'.
+    const coords = ol.proj.transform(map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
+    lat = coords[1]
+    lon = coords[0]
+    draw()
+    //Removes original map element.
+    document.getElementById('map').children[0].remove()
+    pollutionPull()
+  }
+  document.getElementById('getCenter').addEventListener("click", getCenter)
 }
