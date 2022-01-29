@@ -20,7 +20,7 @@ fetch(ipurl)
 //Draw map function using given lat lon from IP.
 function draw() {
   //Styles applied to each point.
-  styleOne = new ol.style.Style({
+  const styleOne = new ol.style.Style({
     image: new ol.style.Circle({
       radius: 50,
       fill: new ol.style.Fill({
@@ -28,7 +28,7 @@ function draw() {
       })
     })
   })
-  styleTwo = new ol.style.Style({
+  const styleTwo = new ol.style.Style({
     image: new ol.style.Circle({
       radius: 50,
       fill: new ol.style.Fill({
@@ -39,10 +39,10 @@ function draw() {
   //Features array created as the vector source 'features' input is an array.
   const features = [];
   //Location of points on the map.
-   featureOne = new ol.Feature({
+  const featureOne = new ol.Feature({
     geometry: new ol.geom.Point(ol.proj.fromLonLat([lon - .01, lat - .01]))
   })
-   featureTwo = new ol.Feature({
+  const featureTwo = new ol.Feature({
     geometry: new ol.geom.Point(ol.proj.fromLonLat([lon, lat]))
   })
   //Append each feature to features list for use in vector source.
@@ -57,17 +57,17 @@ function draw() {
     return styleTwo
   })
   // create the source and layer for feature.
-   vectorSource = new ol.source.Vector({
+   const vectorSource = new ol.source.Vector({
     features
   })
-   vectorLayer = new ol.layer.Vector({
+   const vectorLayer = new ol.layer.Vector({
     source: vectorSource,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
     opacity: 0.5
   })
   //Map creation based on given coordinates.
-   map = new ol.Map({
+   const map = new ol.Map({
     target: 'map',
     layers: [
       new ol.layer.Tile({
@@ -80,7 +80,7 @@ function draw() {
   })
   function getCenter() {
     //returns center of map in usable coords, default map coords are '3857'.
-    coords = ol.proj.transform(map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
+    const coords = ol.proj.transform(map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
     lat = coords[1]
     lon = coords[0]
     draw()
