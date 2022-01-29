@@ -1,4 +1,3 @@
-
 function pollutionPull() {
     const pollutionUrl = 'https://api.openweathermap.org/data/2.5/air_pollution?lat=' + lat + '&lon=' + lon + '&appid=' + api
     fetch(pollutionUrl)
@@ -9,7 +8,6 @@ function pollutionPull() {
             console.log('ERROR')
         })
         .then(function (data) {
-            console.log(data)
             for (let each of document.getElementById('pollutants').children) {
                 each.textContent = each.id +': ' + data.list[0].components[each.id.toLowerCase()]
             }

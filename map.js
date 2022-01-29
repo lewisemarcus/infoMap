@@ -20,29 +20,41 @@ fetch(ipurl)
   })
 //Draw map function using given lat lon from IP.
 function draw() {
-  const features = [];
-  features.push(new ol.Feature({
-    geometry: new ol.geom.Point(ol.proj.fromLonLat([lon, lat]))
-  }))
-  // create the source and layer for feature
-  const vectorSource = new ol.source.Vector({
-    features
-  })
   const iconStyle = new ol.style.Style({
     image: new ol.style.Circle({
       radius: 50,
-      fill: new ol.style.Fill({ color: 'red' }),
+      fill: new ol.style.Fill({ color: 'red' })
     })
+  })
+  const features = [];
+  const featureOne = new ol.Feature({ 
+    geometry: new ol.geom.Point(ol.proj.fromLonLat([lon-.01, lat-.01]))
+  })
+  const featureTwo = new ol.Feature({
+    geometry: new ol.geom.Point(ol.proj.fromLonLat([lon, lat]))
+  })
+  features.push(featureOne, featureTwo)
+  featureOne.setStyle(new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 50,
+      fill: new ol.style.Fill({ color: 'red' })
+    })
+  }))
+  featureTwo.setStyle(new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 50,
+      fill: new ol.style.Fill({ color: 'green' })
+    })
+  }))
+    // create the source and layer for feature
+  const vectorSource = new ol.source.Vector({
+    features
   })
   const vectorLayer = new ol.layer.Vector({
     source: vectorSource,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
-    opacity: 0.5,
-    style: function (feature, resolution) { //feature references iconStyle
-      iconStyle.getImage().setScale(map.getView().getResolutionForZoom(12) / resolution)
-      return iconStyle
-    }
+    opacity: 0.5
   })
   const map = new ol.Map({
     target: 'map',
