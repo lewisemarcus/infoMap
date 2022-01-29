@@ -8,8 +8,10 @@ function pollutionPull() {
             console.log('ERROR')
         })
         .then(function (data) {
+            console.log(data)
             for (let each of document.getElementById('pollutants').children) {
                 each.textContent = each.id +': ' + data.list[0].components[each.id.toLowerCase()]
             }
         })
 }
+//https://positionstack.com/ for city name
